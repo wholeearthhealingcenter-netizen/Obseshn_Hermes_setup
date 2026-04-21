@@ -21,7 +21,6 @@ export interface MemoryPipelineResult {
 export function runMemoryPipeline(
   inputs: RawMemoryInput[]
 ): MemoryPipelineResult {
-  // Step 1: Canonicalize raw inputs
   const canonicalResult = canonicalizeMemoryInputs(inputs);
 
   const allFacts: CanonicalFact[] = [
@@ -29,7 +28,6 @@ export function runMemoryPipeline(
     ...canonicalResult.reviewFacts,
   ];
 
-  // Step 2: Resolve conflicts
   const conflictResult = resolveFactConflicts(allFacts);
 
   return {
@@ -41,4 +39,3 @@ export function runMemoryPipeline(
     decisions: conflictResult.decisions,
   };
 }
-
