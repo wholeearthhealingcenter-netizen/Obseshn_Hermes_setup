@@ -1,0 +1,52 @@
+replay_engine:
+  version: 1
+
+  description: >
+    Hermes replay engine reconstructs system state from memory snapshots
+    and builds replay packets for downstream agents (Ozzy, etc).
+
+  packet:
+    structure:
+      - session_id
+      - timestamp
+      - memory_snapshot
+      - canonical_state
+      - conflicts
+      - approvals_required
+      - downstream_context
+
+  snapshot:
+    types:
+      - last_known_good
+      - latest_raw
+      - approved_state
+
+  flow:
+    - intake_capture
+    - memory_write
+    - canonicalize
+    - conflict_detection
+    - approval_gate
+    - snapshot_update
+    - replay_packet_build
+    - downstream_dispatch
+
+  conflict_handling:
+    strategy: surface_all
+    resolution_required: true
+
+  approvals:
+    required_for:
+      - destructive_changes
+      - schema_mutations
+      - overwrite_existing_truth
+
+  outputs:
+    - replay_packet
+    - audit_log
+    - snapshot_update
+
+  integrations:
+    - ozzy
+    - openclaw_core
+
