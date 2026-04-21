@@ -1,0 +1,13 @@
+openapi: 3.0.0
+info:
+  title: Hermes API
+paths:
+  /sessions:
+    post:
+      summary: Start session
+  /answers:
+    post:
+      summary: Submit answer
+  /approve:
+    post:
+      summary: Approve extraction
